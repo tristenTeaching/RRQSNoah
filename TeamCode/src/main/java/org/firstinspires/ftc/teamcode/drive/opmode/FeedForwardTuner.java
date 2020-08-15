@@ -87,7 +87,7 @@ public class FeedForwardTuner extends LinearOpMode {
             double targetPower = Kinematics.calculateMotorFeedforward(motionState.getV(), motionState.getA(), kV, kA, kStatic);
 
             drive.setDrivePower(new Pose2d(targetPower, 0, 0));
-            drive.update();
+            drive.updatePoseEstimate();
 
             TelemetryPacket packet = new TelemetryPacket();
 
