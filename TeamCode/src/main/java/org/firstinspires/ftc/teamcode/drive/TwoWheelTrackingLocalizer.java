@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode.drive;
 
+import android.support.annotation.NonNull;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.localization.TwoTrackingWheelLocalizer;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.Arrays;
@@ -43,7 +46,7 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
     // Perpendicular is perpendicular to the forward axis
-    private DcMotor parallelEncoder, perpendicularEncoder;
+    private DcMotorEx parallelEncoder, perpendicularEncoder;
 
     private SampleMecanumDrive drive;
 
@@ -53,8 +56,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
             new Pose2d(PERPENDICULAR_X, PERPENDICULAR_Y, Math.toRadians(90))
         ));
 
-        parallelEncoder = hardwareMap.dcMotor.get("parallelEncoder");
-        perpendicularEncoder = hardwareMap.dcMotor.get("perpendicularEncoder");
+        parallelEncoder = hardwareMap.get(DcMotorEx.class, "parallelEncoder");
+        perpendicularEncoder = hardwareMap.get(DcMotorEx.class, "perpendicularEncoder");
     }
 
     public static double encoderTicksToInches(int ticks) {
@@ -71,6 +74,16 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         return Arrays.asList(
                 encoderTicksToInches(parallelEncoder.getCurrentPosition()),
                 encoderTicksToInches(perpendicularEncoder.getCurrentPosition())
+        );
+    }
+
+
+    @NonNull
+    @Override
+    public List<Double> getWheelVelocities() {
+        return Arrays.asList(
+                encoderTicksToInches((int) parallelEncoder.getVelocity()),
+                encoderTicksToInches((int) perpendicularEncoder.getVelocity())
         );
     }
 }
