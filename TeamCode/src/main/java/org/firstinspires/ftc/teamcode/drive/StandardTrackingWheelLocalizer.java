@@ -48,7 +48,7 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
         frontEncoder = hardwareMap.get(DcMotorEx.class, "frontEncoder");
     }
 
-    public static double encoderTicksToInches(int ticks) {
+    public static double encoderTicksToInches(double ticks) {
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
     }
 
@@ -66,9 +66,9 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
     @Override
     public List<Double> getWheelVelocities() {
         return Arrays.asList(
-                encoderTicksToInches((int) leftEncoder.getVelocity()),
-                encoderTicksToInches((int) rightEncoder.getVelocity()),
-                encoderTicksToInches((int) frontEncoder.getVelocity())
+                encoderTicksToInches(leftEncoder.getVelocity()),
+                encoderTicksToInches(rightEncoder.getVelocity()),
+                encoderTicksToInches(frontEncoder.getVelocity())
         );
     }
 }
