@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.drive;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.localization.TwoTrackingWheelLocalizer;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.util.Encoder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +47,7 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
     // Perpendicular is perpendicular to the forward axis
-    private DcMotorEx parallelEncoder, perpendicularEncoder;
+    private Encoder parallelEncoder, perpendicularEncoder;
 
     private SampleMecanumDrive drive;
 
@@ -56,8 +57,10 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
             new Pose2d(PERPENDICULAR_X, PERPENDICULAR_Y, Math.toRadians(90))
         ));
 
-        parallelEncoder = hardwareMap.get(DcMotorEx.class, "parallelEncoder");
-        perpendicularEncoder = hardwareMap.get(DcMotorEx.class, "perpendicularEncoder");
+        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "parallelEncoder"));
+        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "perpendicularEncoder"));
+
+        // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
     }
 
     public static double encoderTicksToInches(int ticks) {
@@ -69,6 +72,7 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         return drive.getRawExternalHeading();
     }
 
+    @NonNull
     @Override
     public List<Double> getWheelPositions() {
         return Arrays.asList(
@@ -77,13 +81,16 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         );
     }
 
-
     @NonNull
     @Override
     public List<Double> getWheelVelocities() {
+        // TODO: If your encoder velocity can exceed 32767 counts / second (such as the REV Through Bore and other
+        //  competing magnetic encoders), change Encoder.getRawVelocity() to Encoder.getCorrectedVelocity() to enable a
+        //  compensation method
+
         return Arrays.asList(
-                encoderTicksToInches((int) parallelEncoder.getVelocity()),
-                encoderTicksToInches((int) perpendicularEncoder.getVelocity())
+                encoderTicksToInches((int) parallelEncoder.getRawVelocity()),
+                encoderTicksToInches((int) perpendicularEncoder.getRawVelocity())
         );
     }
 }
