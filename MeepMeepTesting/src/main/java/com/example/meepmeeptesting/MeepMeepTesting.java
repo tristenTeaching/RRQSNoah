@@ -75,13 +75,81 @@ public class MeepMeepTesting {
 //                                        .splineTo(new Vector2d(20, 60), Math.toRadians(180))
 //                                        .build()
 //                )
+//                .followTrajectorySequence(drive ->
+//                        drive.trajectorySequenceBuilder(new Pose2d())
+//                                .splineTo(new Vector2d(20, 20), Math.toRadians(0))
+//                                .addDisplacementMarker(() -> {})
+//                                .splineTo(new Vector2d(40, 40), Math.toRadians(45), slowConstraints)
+//                                .addTemporalMarker(0.5, 0.5, () -> {})
+//                                .build())
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d())
-                                .splineTo(new Vector2d(20, 20), Math.toRadians(0))
-                                .addDisplacementMarker(() -> {})
-                                .splineTo(new Vector2d(40, 40), Math.toRadians(45), slowConstraints)
-                                .addTemporalMarker(0.5, 0.5, () -> {})
+                        drive.trajectorySequenceBuilder(p2d(-36, -60, toRad(90)))
+                                // To Stone 1
+                                .lineToSplineHeading(p2d(-24, -33, toRad(180)))
+
+                                // To Foundation 1
+                                .setReversed(true)
+                                .splineToConstantHeading(v2d(-8, -37), 0)
+                                .splineTo(v2d(48, -33), 0)
+
+                                // To stone 2
+                                .setReversed(false)
+                                .splineTo(v2d(-8, -37), toRad(180))
+                                .splineTo(v2d(-48, -33), toRad(180))
+
+                                // To foundation 2
+                                .setReversed(true)
+                                .splineTo(v2d(-8, -37), 0)
+                                .splineTo(v2d(48, -33), 0)
+
+                                // To stone 3
+                                .setReversed(false)
+                                .splineTo(v2d(-8, -37), toRad(180))
+                                .splineTo(v2d(-26.5, -28), toRad(135))
+
+                                // To foundation 3
+                                .setReversed(true)
+                                .splineTo(v2d(0, -37), toRad(0))
+                                .splineTo(v2d(48, -33), toRad(90))
+
+                                // Stone 4 + foundation pull
+                                .setReversed(false)
+                                .splineTo(v2d(24, -48), toRad(180))
+                                .splineToConstantHeading(v2d(0, -38), toRad(180))
+                                .splineTo(v2d(-34.5, -28), toRad(135))
+
+                                // Foundation 4
+                                .setReversed(true)
+                                .splineTo(v2d(18, -37), 0)
+
+                                // Stone 5
+                                .setReversed(false)
+                                .splineTo(v2d(-50.5, -28), toRad(135))
+
+                                // Foundation 5
+                                .setReversed(true)
+                                .splineTo(v2d(42, -37), 0)
+
+                                // Park
+                                .setReversed(false)
+                                .splineToConstantHeading(v2d(0, -34), toRad(180))
+
+                                // Return to home
+                                .lineToSplineHeading(p2d(-36,-60, toRad(90)))
+
                                 .build())
                 .start();
+    }
+
+    public static Vector2d v2d(double x, double y) {
+        return new Vector2d(x, y);
+    }
+
+    public static Pose2d p2d(double x, double y, double heading) {
+        return new Pose2d(x, y, heading);
+    }
+
+    public static Double toRad(double angle) {
+        return Math.toRadians(angle);
     }
 }
