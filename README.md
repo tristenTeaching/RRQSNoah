@@ -1,6 +1,8 @@
-# Road Runner Quickstart
+# Road Runner Advanced Examples
 
-An example FTC project using [Road Runner](https://github.com/acmerobotics/road-runner). **Note:** Road Runner is in alpha and many of its APIs are incubating.
+You should be fairly familiar with Road Runner and the quickstart before taking a look at these samples.
+
+The main quickstart repo can be found [here](https://github.com/acmerobotics/road-runner).
 
 ## Installation
 
@@ -10,8 +12,12 @@ For more detailed instructions on getting Road Runner setup in your own project,
 
 1. Open the project in Android Studio and build `TeamCode` like any other `ftc_app` project.
 
-1. If you have trouble with multidex, enable proguard by changing `useProguard` to `true` in `build.common.gradle`.
+## Samples:
 
-## Documentation
+1. Road Runner in teleop - just the localizer
 
-Check out the new [online quickstart documentation](https://acme-robotics.gitbook.io/road-runner/quickstart/introduction).
+2. Road Runner in teleop - incorporating the drive class
+    
+3. Async following with FSM orchestration
+
+4. Breaking from a live trajectory
