@@ -17,9 +17,11 @@ For more detailed instructions on getting Road Runner setup in your own project,
 1. Passing pose data between opmodes
 
     Files:
-        - [TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpJustLocalizer.java](teamcode/drive/advanced/TeleOpJustLocalizer.java)
-        - [TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AutoTransferPose.java](teamcode/drive/advanced/AutoTransferPose.java)
-        - [TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/PoseStorage.java](teamcode/drive/advanced/PoseStorage.java)
+    - [teamcode/drive/advanced/TeleOpJustLocalizer.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpJustLocalizer.java)
+        
+    - [teamcode/drive/advanced/AutoTransferPose.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AutoTransferPose.java)
+        
+    - [teamcode/drive/advanced/PoseStorage.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/PoseStorage.java)
 
     If you wish to read your localizer's pose during teleop, you need to know where you start.
     This is because the localizer only measures relative position.
@@ -29,7 +31,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
 2. Road Runner in teleop - just the localizer
     
     File:
-    [TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpJustLocalizer.java](teamcode/drive/advanced/TeleOpJustLocalizer.java)
+    - [teamcode/drive/advanced/TeleOpJustLocalizer.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpJustLocalizer.java)
 
     Example code demonstrating how one would read from their localizer in teleop. Utilizes the
     passing data between opmodes example for the start pose.
