@@ -45,6 +45,7 @@ public class TeleOpJustLocalizer extends LinearOpMode {
             telemetry.addData("x", myPose.getX());
             telemetry.addData("y", myPose.getY());
             telemetry.addData("heading", myPose.getHeading());
+            telemetry.update();
 
             // Teleop driving part
             // Mecanum example code from gm0
