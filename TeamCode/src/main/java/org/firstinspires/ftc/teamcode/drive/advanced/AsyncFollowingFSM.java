@@ -23,6 +23,9 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  * state charts for strong cyclical and strongly enforced states, etc. There is still a lot to do
  * to supercharge your code. This can be much cleaner by abstracting many of these things. This is
  * just an initial starter.
+ *
+ * gm0 also contains further information on finite state machines for FTC purposes
+ * https://gm0.org/en/stable/docs/software/finite-state-machines.html
  */
 public class AsyncFollowingFSM extends LinearOpMode {
 
