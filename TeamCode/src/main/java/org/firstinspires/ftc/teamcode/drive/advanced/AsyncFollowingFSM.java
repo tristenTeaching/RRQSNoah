@@ -77,12 +77,8 @@ public class AsyncFollowingFSM extends LinearOpMode {
         // Third trajectory
         // We have to define a new end pose because we can't just call trajectory2.end()
         // Since there was a point turn before that
-        // So we just take the pose from trajectory2.end(), copy it, and then add the turn to the heading
-        Pose2d newLastPose = trajectory2.end().copy(
-                trajectory2.end().getX(),
-                trajectory2.end().getY(),
-                trajectory2.end().getHeading() + turnAngle1  // Modify the heading
-        );
+        // So we just take the pose from trajectory2.end(), add an
+        Pose2d newLastPose = trajectory2.end().plus(new Pose2d(0, 0, turnAngle1));
         Trajectory trajectory3 = drive.trajectoryBuilder(newLastPose)
                 .lineToConstantHeading(new Vector2d(-15, 0))
                 .build();
