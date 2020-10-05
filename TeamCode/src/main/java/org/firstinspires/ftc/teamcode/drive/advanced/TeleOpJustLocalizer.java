@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drive.advanced;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
  * This opmode assumes you have your own robot class and simply wish to utilize Road Runner's
  * packaged localizer tools.
  */
+@TeleOp(group = "advanced")
 public class TeleOpJustLocalizer extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {

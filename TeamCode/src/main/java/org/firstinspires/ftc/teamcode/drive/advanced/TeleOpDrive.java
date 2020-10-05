@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.drive.advanced;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -10,12 +11,13 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 /**
  * This opmode demonstrates how to create a teleop using just the SampleMecanumDrive class without
  * the need for an external robot class. This will allow you to do some cool things like
- * incorporating live trajectory following in your teleop. Check out TeleopLiveTrajectory.java for
+ * incorporating live trajectory following in your teleop. Check out TeleOpAgumentedDriving.java for
  * an example of such behavior.
  *
  * This opmode is essentially just LocalizationTest.java with a few additions and comments.
  */
 @Config
+@Autonomous(group = "advanced")
 public class TeleOpDrive extends LinearOpMode {
     // Create weights for velocity x, velocity y, and angular velocity kinematics
     // Mecanum kinematics works in such a way where the x/y direction may not exert torque
