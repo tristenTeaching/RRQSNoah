@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.drive.advanced;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,7 +15,19 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  *
  * This opmode is essentially just LocalizationTest.java with a few additions and comments.
  */
+@Config
 public class TeleOpDrive extends LinearOpMode {
+    // Create weights for velocity x, velocity y, and angular velocity kinematics
+    // Mecanum kinematics works in such a way where the x/y direction may not exert torque
+    // equally, thus requires a weighting to balance them out.
+    // Follow [this link](https://www.chiefdelphi.com/t/paper-mecanum-and-omni-kinematic-and-force-analysis/106153)
+    // for further details on the described behavior
+    // Weights are arbitrarily set by the user to adjust the behavior to their liking
+    // You may leave these at 1
+    public static double VX_WEIGHT = 1;
+    public static double VY_WEIGHT = 1;
+    public static double OMEGA_WEIGHT = 1;
+
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize SampleMecanumDrive
@@ -43,13 +56,13 @@ public class TeleOpDrive extends LinearOpMode {
             Pose2d vel;
             if (Math.abs(baseVel.getX()) + Math.abs(baseVel.getY()) + Math.abs(baseVel.getHeading()) > 1) {
                 // re-normalize the powers according to the weights
-                double denom =  Math.abs(baseVel.getX())
-                        + Math.abs(baseVel.getY())
-                        + Math.abs(baseVel.getHeading());
+                double denom = VX_WEIGHT * Math.abs(baseVel.getX())
+                        + VY_WEIGHT * Math.abs(baseVel.getY())
+                        + OMEGA_WEIGHT * Math.abs(baseVel.getHeading());
                 vel = new Pose2d(
-                        baseVel.getX(),
-                        baseVel.getY(),
-                        baseVel.getHeading()
+                        VX_WEIGHT * baseVel.getX(),
+                        VY_WEIGHT * baseVel.getY(),
+                        OMEGA_WEIGHT * baseVel.getHeading()
                 ).div(denom);
             } else {
                 vel = baseVel;
