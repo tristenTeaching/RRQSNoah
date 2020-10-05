@@ -22,6 +22,7 @@ public class AutoBreakTrajectory extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        // Initialize custom cancelable SampleMecanumDrive class
         SampleMecanumDriveCancelable drive = new SampleMecanumDriveCancelable(hardwareMap);
 
         // Set the pose estimate to where you know the bot will start in autonomous
