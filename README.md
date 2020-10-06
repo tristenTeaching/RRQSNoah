@@ -63,8 +63,9 @@ For more detailed instructions on getting Road Runner setup in your own project,
 
 5. Breaking from a live trajectory
 
-   File:
+   Files:
    - [teamcode/drive/advanced/AutoBreakTrajectory.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AutoBreakTrajectory.java)
+   - [teamcode/drive/advanced/SampleMecanumDriveCancelable.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/SampleMecanumDriveCancelable.java)
 
     Example opmode describing how to break out from a live trajectory at any arbitrary point in time.
     This allows for neat things like incorporating live trajectory following in your teleop.
@@ -76,8 +77,9 @@ For more detailed instructions on getting Road Runner setup in your own project,
 
 6. Automatic driving in teleop
 
-   File:
+   Files:
    - [teamcode/drive/advanced/TeleOpAgumentedDriving.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAgumentedDriving.java)
+   - [teamcode/drive/advanced/SampleMecanumDriveCancelable.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/SampleMecanumDriveCancelable.java)
 
     **WARNING: THIS IS A DEMONSTRATION OF ROAD RUNNER'S CAPABILITIES. I DO NOT RECOMMEND DOING THIS IN GAME**
 
