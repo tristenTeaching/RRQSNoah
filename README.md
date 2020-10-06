@@ -45,7 +45,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
 3. Road Runner in teleop - incorporating the drive class
    
    File:
-       - [teamcode/drive/advanced/TeleOpDrive.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpDrive.java)
+   - [teamcode/drive/advanced/TeleOpDrive.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpDrive.java)
 
     Example code demonstrating how one would incorporate the `SampleMecanumDrive` class into their
     teleop, without the need for a separate robot class. Instead, this sample utilizes the drive
@@ -55,7 +55,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
 4. Async following with FSM orchestration
 
    File:
-       - [teamcode/drive/advanced/AsyncFollowingFSM.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AsyncFollowingFSM.java)
+   - [teamcode/drive/advanced/AsyncFollowingFSM.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AsyncFollowingFSM.java)
 
     Example opmode describing how one utilizes async following in conjunction with finite state
     machines to orchestrate variable, multi-step movements. This allows for complex autonomous
@@ -64,7 +64,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
 5. Breaking from a live trajectory
 
    File:
-       - [teamcode/drive/advanced/AutoBreakTrajectory.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AutoBreakTrajectory.java)
+   - [teamcode/drive/advanced/AutoBreakTrajectory.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AutoBreakTrajectory.java)
 
     Example opmode describing how to break out from a live trajectory at any arbitrary point in time.
     This allows for neat things like incorporating live trajectory following in your teleop.
@@ -77,7 +77,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
 6. Automatic driving in teleop
 
    File:
-       - [teamcode/drive/advanced/TeleOpAgumentedDriving.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAgumentedDriving.java)
+   - [teamcode/drive/advanced/TeleOpAgumentedDriving.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAgumentedDriving.java)
 
     **WARNING: THIS IS A DEMONSTRATION OF ROAD RUNNER'S CAPABILITIES. I DO NOT RECOMMEND DOING THIS IN GAME**
 
