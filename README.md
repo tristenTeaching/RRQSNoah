@@ -78,7 +78,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
 6. Automatic driving in teleop
 
    Files:
-   - [teamcode/drive/advanced/TeleOpAgumentedDriving.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAgumentedDriving.java)
+   - [teamcode/drive/advanced/TeleOpAugmentedDriving.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAugmentedDriving.java)
    - [teamcode/drive/advanced/SampleMecanumDriveCancelable.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/SampleMecanumDriveCancelable.java)
 
     **WARNING: THIS IS A DEMONSTRATION OF ROAD RUNNER'S CAPABILITIES. I DO NOT RECOMMEND DOING THIS IN GAME**
