@@ -83,9 +83,9 @@ For more detailed instructions on getting Road Runner setup in your own project,
 
     **WARNING: THIS IS A DEMONSTRATION OF ROAD RUNNER'S CAPABILITIES. I DO NOT RECOMMEND DOING THIS IN GAME**
 
-    Example opmode demonstrates how one can augment driver control by following Road Runner
-    arbitrary Road Runner trajectories at any time during teleop. This really isn't recommended at
-    all. This is not what Trajectories are meant for. A path follower is more suited for this
-    scenario. This sample primarily serves as a demo showcasing Road Runner's capabilities.
+    Example opmode demonstrates how one can augment driver control by following arbitrary
+    Road Runner trajectories at any time during teleop. This really isn't recommended at all. This
+    is not what Trajectories are meant for. A path follower is more suited for this scenario. This
+    sample primarily serves as a demo showcasing Road Runner's capabilities.
     
     See the comments for details on the driver augmentation.
