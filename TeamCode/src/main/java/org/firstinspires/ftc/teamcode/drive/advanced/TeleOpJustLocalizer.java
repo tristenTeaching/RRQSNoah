@@ -4,7 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -64,23 +64,19 @@ public class TeleOpJustLocalizer extends LinearOpMode {
     // Simple custom robot class
     // Holds the hardware for a basic mecanum drive
     class Robot {
-        private DcMotor
-                motorFrontLeft,
-                motorFrontRight,
-                motorBackLeft,
-                motorBackRight;
+        private DcMotorEx leftFront, leftRear, rightRear, rightFront;
 
         public Robot(HardwareMap hardwareMap) {
             // Initialize motors
-            motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
-            motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
-            motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
-            motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
+            leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+            leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+            rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
+            rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
 
             // Reverse right side motor directions
             // This may need to be flipped to the left side depending on your motor rotation direction
-            motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-            motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+            rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+            rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
             // Turn on bulk reads to help optimize loop times
             for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
@@ -112,10 +108,10 @@ public class TeleOpJustLocalizer extends LinearOpMode {
                 powerBackRight /= max;
             }
 
-            motorFrontLeft.setPower(powerFrontLeft);
-            motorFrontRight.setPower(powerFrontRight);
-            motorBackLeft.setPower(powerBackLeft);
-            motorBackRight.setPower(powerBackRight);
+            leftFront.setPower(powerFrontLeft);
+            rightFront.setPower(powerFrontRight);
+            leftRear.setPower(powerBackLeft);
+            rightRear.setPower(powerBackRight);
         }
     }
 }
