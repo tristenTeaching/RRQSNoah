@@ -17,15 +17,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * This bot starts in driver controlled mode by default. The player is able to drive the bot around
  * like any teleop opmode. However, if one of the select buttons are pressed, the bot will switch
  * to automatic control and run to specified location on its own.
- *
+ * <p>
  * If A is pressed, the bot will generate a splineTo() trajectory on the fly and follow it to
  * targetA (x: 45, y: 45, heading: 90deg).
- *
+ * <p>
  * If B is pressed, the bot will generate a lineTo() trajectory on the fly and follow it to
  * targetB (x: -15, y: 25, heading: whatever the heading is when you press B).
- *
+ * <p>
  * If Y is pressed, the bot will turn to face 45 degrees, no matter its position on the field.
- *
+ * <p>
  * Pressing X will cancel trajectory following and switch control to the driver. The bot will also
  * cede control to the driver once trajectory following is done.
  * <p>
@@ -37,17 +37,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Config
 @TeleOp(group = "advanced")
 public class TeleOpAugmentedDriving extends LinearOpMode {
-    // Create weights for velocity x, velocity y, and angular velocity kinematics
-    // Mecanum kinematics works in such a way where the x/y direction may not exert torque
-    // equally, thus requires a weighting to balance them out.
-    // Follow [this link](https://www.chiefdelphi.com/t/paper-mecanum-and-omni-kinematic-and-force-analysis/106153)
-    // for further details on the described behavior
-    // Weights are arbitrarily set by the user to adjust the behavior to their liking
-    // You may leave these at 1
-    public static double VX_WEIGHT = 1;
-    public static double VY_WEIGHT = 1;
-    public static double OMEGA_WEIGHT = 1;
-
     // Define 2 states, drive control or automatic control
     enum State {
         DRIVER_CONTROL,
@@ -101,30 +90,13 @@ public class TeleOpAugmentedDriving extends LinearOpMode {
             // control to the automatic mode
             switch (currentState) {
                 case DRIVER_CONTROL:
-                    // Translate gamepad inputs into velocity
-                    Pose2d baseVel = new Pose2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
+                    drive.setWeightedDrivePower(
+                            new Pose2d(
+                                    -gamepad1.left_stick_y,
+                                    -gamepad1.left_stick_x,
+                                    -gamepad1.right_stick_x
+                            )
                     );
-
-                    Pose2d vel;
-                    if (Math.abs(baseVel.getX()) + Math.abs(baseVel.getY()) + Math.abs(baseVel.getHeading()) > 1) {
-                        // re-normalize the powers according to the weights
-                        double denom = VX_WEIGHT * Math.abs(baseVel.getX())
-                                + VY_WEIGHT * Math.abs(baseVel.getY())
-                                + OMEGA_WEIGHT * Math.abs(baseVel.getHeading());
-                        vel = new Pose2d(
-                                VX_WEIGHT * baseVel.getX(),
-                                VY_WEIGHT * baseVel.getY(),
-                                OMEGA_WEIGHT * baseVel.getHeading()
-                        ).div(denom);
-                    } else {
-                        vel = baseVel;
-                    }
-
-                    // Set drive power directly
-                    drive.setDrivePower(vel);
 
                     if (gamepad1.a) {
                         // If the A button is pressed on gamepad1, we generate a splineTo()
@@ -139,7 +111,7 @@ public class TeleOpAugmentedDriving extends LinearOpMode {
 
                         currentState = State.AUTOMATIC_CONTROL;
                     } else if (gamepad1.b) {
-                        // If the A button is pressed on gamepad1, we generate a lineTo()
+                        // If the B button is pressed on gamepad1, we generate a lineTo()
                         // trajectory on the fly and follow it
                         // We switch the state to AUTOMATIC_CONTROL
 
