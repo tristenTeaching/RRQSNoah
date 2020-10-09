@@ -15,14 +15,14 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  * allows you to run your own logic beside the drive.update() command. This enables one to run
  * their own loops in the background such as a PID controller for a lift. We can also continuously
  * write our pose to PoseStorage.
- *
+ * <p>
  * The use of a State enum and a currentState field constitutes a "finite state machine."
  * You should understand the basics of what a state machine is prior to reading this opmode. A good
  * explanation can be found here:
  * https://www.youtube.com/watch?v=Pu7PMN5NGkQ (A finite state machine introduction tailored to FTC)
  * or here:
  * https://gm0.org/en/stable/docs/software/finite-state-machines.html (gm0's article on FSM's)
- *
+ * <p>
  * You can expand upon the FSM concept and take advantage of command based programming, subsystems,
  * state charts (for cyclical and strongly enforced states), etc. There is still a lot to do
  * to supercharge your code. This can be much cleaner by abstracting many of these things. This
@@ -109,14 +109,14 @@ public class AsyncFollowingFSM extends LinearOpMode {
             // in parallel. This is the basic idea for subsystems and commands.
 
             // We essentially define the flow of the state machine through this switch statement
-            switch(currentState) {
+            switch (currentState) {
                 case TRAJECTORY_1:
                     // Check if the drive class isn't busy
                     // `isBusy() == true` while it's following the trajectory
                     // Once `isBusy() == false`, the trajectory follower signals that it is finished
                     // We move on to the next state
                     // Make sure we use the async follow function
-                    if(!drive.isBusy()) {
+                    if (!drive.isBusy()) {
                         currentState = State.TRAJECTORY_2;
                         drive.followTrajectoryAsync(trajectory2);
                     }
@@ -124,7 +124,7 @@ public class AsyncFollowingFSM extends LinearOpMode {
                 case TRAJECTORY_2:
                     // Check if the drive class is busy following the trajectory
                     // Move on to the next state, TURN_1, once finished
-                    if(!drive.isBusy()) {
+                    if (!drive.isBusy()) {
                         currentState = State.TURN_1;
                         drive.turnAsync(turnAngle1);
                     }
@@ -132,7 +132,7 @@ public class AsyncFollowingFSM extends LinearOpMode {
                 case TURN_1:
                     // Check if the drive class is busy turning
                     // If not, move onto the next state, TRAJECTORY_3, once finished
-                    if(!drive.isBusy()) {
+                    if (!drive.isBusy()) {
                         currentState = State.TRAJECTORY_3;
                         drive.followTrajectoryAsync(trajectory3);
                     }
@@ -140,7 +140,7 @@ public class AsyncFollowingFSM extends LinearOpMode {
                 case TRAJECTORY_3:
                     // Check if the drive class is busy following the trajectory
                     // If not, move onto the next state, WAIT_1
-                    if(!drive.isBusy()) {
+                    if (!drive.isBusy()) {
                         currentState = State.WAIT_1;
 
                         // Start the wait timer once we switch to the next state
@@ -151,7 +151,7 @@ public class AsyncFollowingFSM extends LinearOpMode {
                 case WAIT_1:
                     // Check if the timer has exceeded the specified wait time
                     // If so, move on to the TURN_2 state
-                    if(waitTimer1.seconds() >= waitTime1) {
+                    if (waitTimer1.seconds() >= waitTime1) {
                         currentState = State.TURN_2;
                         drive.turnAsync(turnAngle2);
                     }
@@ -160,7 +160,7 @@ public class AsyncFollowingFSM extends LinearOpMode {
                     // Check if the drive class is busy turning
                     // If not, move onto the next state, IDLE
                     // We are done with the program
-                    if(!drive.isBusy()) {
+                    if (!drive.isBusy()) {
                         currentState = State.IDLE;
                     }
                     break;

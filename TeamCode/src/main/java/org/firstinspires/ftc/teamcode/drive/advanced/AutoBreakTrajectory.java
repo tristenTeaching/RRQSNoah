@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Example opmode demonstrating how to break out from a live trajectory at any arbitrary point in
  * time. This will allow you to do some cool things like incorporating live trajectory following in
  * your teleop. Check out TeleOpAgumentedDriving.java for an example of such behavior.
- *
+ * <p>
  * 3 seconds into the start of the opmode, `drive.cancelFollowing()` is called, forcing the drive
  * mode into IDLE and prematurely stopping the following.
  * <p>
@@ -48,7 +48,7 @@ public class AutoBreakTrajectory extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             // 3 seconds into the opmode, we cancel the following
-            if(stopTimer.seconds() >= 3) {
+            if (stopTimer.seconds() >= 3) {
                 // Cancel following
                 drive.cancelFollowing();
 
