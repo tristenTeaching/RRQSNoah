@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.drive.opmode;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.profile.MotionProfile;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
@@ -19,6 +18,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.List;
 
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MOTOR_VELO_PID;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.RUN_USING_ENCODER;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
@@ -41,15 +41,17 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  *    mitigate oscillations.
  * 2. Add kI (or adjust kF) until the steady state/constant velocity plateaus are reached.
  * 3. Back off kP and kD a little until the response is less oscillatory (but without lag).
+ *
+ * Pressing X (on the Xbox and Logitech F310 gamepads, square on the PS4 Dualshock gamepad) will
+ * pause the tuning process and enter driver override, allowing the user to reset the position of
+ * the bot in the event that it drifts off the path.
+ * Pressing A (on the Xbox and Logitech F310 gamepads, X on the PS4 Dualshock gamepad) will cede
+ * control back to the tuning process.
  */
 @Config
 @Autonomous(group = "drive")
 public class DriveVelocityPIDTuner extends LinearOpMode {
     public static double DISTANCE = 72; // in
-
-    public static double VX_WEIGHT = 1;
-    public static double VY_WEIGHT = 1;
-    public static double OMEGA_WEIGHT = 1;
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 
@@ -62,9 +64,9 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
     private Mode mode;
 
-    private double lastKp = DriveConstants.kP;
-    private double lastKi = DriveConstants.kI;
-    private double lastKd = DriveConstants.kD;
+    private double lastKp = MOTOR_VELO_PID.kP;
+    private double lastKi = MOTOR_VELO_PID.kI;
+    private double lastKd = MOTOR_VELO_PID.kD;
 
     private static MotionProfile generateProfile(boolean movingForward) {
         MotionState start = new MotionState(movingForward ? 0 : DISTANCE, 0, 0, 0);
@@ -88,8 +90,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
         mode = Mode.TUNING_MODE;
 
-        drive.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,
-                new PIDCoefficients(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD));
+        drive.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
 
         NanoClock clock = NanoClock.system();
 
@@ -107,7 +108,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
 
         while (!isStopRequested()) {
-            telemetry.addData("Mode", mode);
+            telemetry.addData("mode", mode);
 
             switch (mode) {
                 case TUNING_MODE:
@@ -152,40 +153,23 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
                         profileStart = clock.seconds();
                     }
 
-                    Pose2d baseVel = new Pose2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
+                    drive.setWeightedDrivePower(
+                            new Pose2d(
+                                    -gamepad1.left_stick_y,
+                                    -gamepad1.left_stick_x,
+                                    -gamepad1.right_stick_x
+                            )
                     );
-
-                    Pose2d vel;
-                    if (Math.abs(baseVel.getX()) + Math.abs(baseVel.getY())
-                            + Math.abs(baseVel.getHeading()) > 1) {
-                        // re-normalize the powers according to the weights
-                        double denom = VX_WEIGHT * Math.abs(baseVel.getX())
-                                + VY_WEIGHT * Math.abs(baseVel.getY())
-                                + OMEGA_WEIGHT * Math.abs(baseVel.getHeading());
-                        vel = new Pose2d(
-                                VX_WEIGHT * baseVel.getX(),
-                                VY_WEIGHT * baseVel.getY(),
-                                OMEGA_WEIGHT * baseVel.getHeading()
-                        ).div(denom);
-                    } else {
-                        vel = baseVel;
-                    }
-
-                    drive.setDrivePower(vel);
                     break;
             }
 
-            if (lastKp != DriveConstants.kP || lastKd != DriveConstants.kD
-                    || lastKi != DriveConstants.kI) {
-                drive.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,
-                        new PIDCoefficients(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD));
+            if (lastKp != MOTOR_VELO_PID.kP || lastKd != MOTOR_VELO_PID.kD
+                    || lastKi != MOTOR_VELO_PID.kI) {
+                drive.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
 
-                lastKp = DriveConstants.kP;
-                lastKi = DriveConstants.kI;
-                lastKd = DriveConstants.kD;
+                lastKp = MOTOR_VELO_PID.kP;
+                lastKi = MOTOR_VELO_PID.kI;
+                lastKd = MOTOR_VELO_PID.kD;
             }
 
             telemetry.update();
