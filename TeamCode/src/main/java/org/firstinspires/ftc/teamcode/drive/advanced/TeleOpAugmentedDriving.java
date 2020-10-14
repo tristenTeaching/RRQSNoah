@@ -140,8 +140,8 @@ public class TeleOpAugmentedDriving extends LinearOpMode {
                     // If drive finishes its task, cede control to the driver
                     if (!drive.isBusy()) {
                         currentState = State.DRIVER_CONTROL;
-                        break;
                     }
+                    break;
             }
         }
     }
