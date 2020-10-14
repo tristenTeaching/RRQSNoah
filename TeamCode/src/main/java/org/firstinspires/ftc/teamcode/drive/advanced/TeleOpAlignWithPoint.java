@@ -72,10 +72,10 @@ public class TeleOpAlignWithPoint extends LinearOpMode {
                         currentState = State.NORMAL_CONTROL;
                     }
 
-                    Vector2d difference = targetPosition.minus(new Vector2d(poseEstimate.getX(), poseEstimate.getY()));
+                    Vector2d difference = targetPosition.minus(poseEstimate.vec());
                     double angleToPoint = difference.angle();
 
-                    if(angleToPoint - poseEstimate.getHeading() > Math.PI)
+                    if (angleToPoint - poseEstimate.getHeading() > Math.PI)
                         angleToPoint -= Math.PI * 2;
 
                     Log.i("break", "--------------");
