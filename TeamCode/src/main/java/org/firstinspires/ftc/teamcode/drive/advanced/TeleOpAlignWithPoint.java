@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.drive.advanced;
 
-import android.util.Log;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
@@ -11,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Config
@@ -44,6 +43,7 @@ public class TeleOpAlignWithPoint extends LinearOpMode {
         drive.setPoseEstimate(PoseStorage.currentPose);
 
         headingController.setOutputBounds(-1, 1);
+        headingController.setInputBounds(-Math.PI, Math.PI);
 
         waitForStart();
 
@@ -72,30 +72,31 @@ public class TeleOpAlignWithPoint extends LinearOpMode {
                         currentState = State.NORMAL_CONTROL;
                     }
 
-                    Vector2d difference = targetPosition.minus(poseEstimate.vec());
-                    double angleToPoint = difference.angle();
-
-                    if (angleToPoint - poseEstimate.getHeading() > Math.PI)
-                        angleToPoint -= Math.PI * 2;
-
-                    Log.i("break", "--------------");
-                    Log.i("heading", Double.toString(Math.toDegrees(poseEstimate.getHeading())));
-                    Log.i("angleToPoint", Double.toString(Math.toDegrees(difference.angle())));
-                    Log.i("angleToPointNormalized", Double.toString(Math.toDegrees(angleToPoint)));
-
-                    headingController.setTargetPosition(angleToPoint);
-
                     // Create a vector from the gamepad x/y inputs
                     // Then, rotate that vector by the inverse of that heading
+                    // Converts control to field centric
                     Vector2d input = new Vector2d(
                             -gamepad1.left_stick_y,
                             -gamepad1.left_stick_x
                     ).rotated(-poseEstimate.getHeading());
 
+                    Vector2d difference = targetPosition.minus(poseEstimate.vec());
+                    // Obtain the target angle for feedback and derivative for feedforward
+                    double theta = difference.angle();
+
+                    // Not technically omega because its power and this is the derivative of atan2
+                    double thetaFF = input.rotated(-Math.PI / 2).dot(difference) / (difference.norm() * difference.norm());
+
+                    headingController.setTargetPosition(theta);
+
+                    double headingInput = (headingController.update(poseEstimate.getHeading())
+                            * DriveConstants.kV + thetaFF)
+                            * DriveConstants.TRACK_WIDTH;
+
                     driveDirection = new Pose2d(
                             input.getX(),
                             input.getY(),
-                            headingController.update(poseEstimate.getHeading())
+                            headingInput
                     );
 
                     break;
