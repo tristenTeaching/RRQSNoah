@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drive.advanced;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.util.Angle;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -124,7 +125,7 @@ public class TeleOpAugmentedDriving extends LinearOpMode {
                         // If Y is pressed, we turn the bot to the specified angle to reach
                         // targetAngle (by default, 45 degrees)
 
-                        drive.turnAsync(targetAngle - poseEstimate.getHeading());
+                        drive.turnAsync(Angle.normDelta(targetAngle - poseEstimate.getHeading()));
 
                         currentState = State.AUTOMATIC_CONTROL;
                     }
