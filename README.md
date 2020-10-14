@@ -52,7 +52,17 @@ For more detailed instructions on getting Road Runner setup in your own project,
     class's kinematics and `setDrivePower()` function. This sample is essentially just a modified
     `LocalizationTest.java` with pose extraction from `PoseStorage` and additional comments.
     
-4. Async following with FSM orchestration
+4. Road Runner in teleop - field centric drive
+    
+    File:
+    - [teamcode/drive/advanced/TeleOpFieldCentric.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpFieldCentric.java)
+
+     Example code demonstrating how one would implement field centric control using
+     `SampleMecanumDrive.java`. This file is essentially just `TeleOpDrive.java` with the addition
+     of field centric control. To achieve field centric control, the only modification one needs is
+     to rotate the input vector by the current heading before passing it into the inverse kinematics.
+
+5. Async following with FSM orchestration
 
    File:
    - [teamcode/drive/advanced/AsyncFollowingFSM.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AsyncFollowingFSM.java)
@@ -61,7 +71,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
     machines to orchestrate variable, multi-step movements. This allows for complex autonomous
     programs.
 
-5. Breaking from a live trajectory
+6. Breaking from a live trajectory
 
    Files:
    - [teamcode/drive/advanced/AutoBreakTrajectory.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AutoBreakTrajectory.java)
@@ -75,7 +85,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
     This opmode utilizes the `SampleMecanumDriveCancelable.java` class. The default
     `SampleMecanumDrive.java` class does not allow for arbitrary following cancellation.
 
-6. Automatic driving in teleop
+7. Automatic driving in teleop
 
    Files:
    - [teamcode/drive/advanced/TeleOpAugmentedDriving.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAugmentedDriving.java)
