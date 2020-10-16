@@ -62,7 +62,17 @@ For more detailed instructions on getting Road Runner setup in your own project,
      of field centric control. To achieve field centric control, the only modification one needs is
      to rotate the input vector by the current heading before passing it into the inverse kinematics.
 
-5. Async following with FSM orchestration
+5. Road Runner in teleop - align to point
+
+    File:
+    - [teamcode/drive/advanced/TeleOpAlignWithPoint.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAlignWithPoint.java)
+
+    Example code demonstrating how to align the bot to a specified point in teleop. The user is able
+    to switch from normal driver control mode to alignment mode. Alignment mode will switch into
+    field centric and independently control heading via a PID controller to align with the specified
+    point.
+
+6. Async following with FSM orchestration
 
    File:
    - [teamcode/drive/advanced/AsyncFollowingFSM.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AsyncFollowingFSM.java)
@@ -71,7 +81,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
     machines to orchestrate variable, multi-step movements. This allows for complex autonomous
     programs.
 
-6. Breaking from a live trajectory
+7. Breaking from a live trajectory
 
    Files:
    - [teamcode/drive/advanced/AutoBreakTrajectory.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AutoBreakTrajectory.java)
@@ -85,7 +95,7 @@ For more detailed instructions on getting Road Runner setup in your own project,
     This opmode utilizes the `SampleMecanumDriveCancelable.java` class. The default
     `SampleMecanumDrive.java` class does not allow for arbitrary following cancellation.
 
-7. Automatic driving in teleop
+8. Automatic driving in teleop
 
    Files:
    - [teamcode/drive/advanced/TeleOpAugmentedDriving.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAugmentedDriving.java)
