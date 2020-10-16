@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  * field centric control. To achieve field centric control, the only modification one needs is to
  * rotate the input vector by the current heading before passing it into the inverse kinematics.
  * <p>
- * See lines 38-51.
+ * See lines 42-57.
  */
 @TeleOp(group = "advanced")
 public class TeleOpFieldCentric extends LinearOpMode {
