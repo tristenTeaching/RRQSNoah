@@ -34,6 +34,7 @@ import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.BASE_CONSTRAINTS;
@@ -61,6 +62,8 @@ public class SampleMecanumDriveCancelable extends MecanumDrive {
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
 
+    public static int POSE_HISTORY_LIMIT = 100;
+
     public enum Mode {
         IDLE,
         TURN,
@@ -79,7 +82,7 @@ public class SampleMecanumDriveCancelable extends MecanumDrive {
     private DriveConstraints constraints;
     private TrajectoryFollower follower;
 
-    private List<Pose2d> poseHistory;
+    private LinkedList<Pose2d> poseHistory;
 
     private DcMotorEx leftFront, leftRear, rightRear, rightFront;
     private List<DcMotorEx> motors;
@@ -104,7 +107,7 @@ public class SampleMecanumDriveCancelable extends MecanumDrive {
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
-        poseHistory = new ArrayList<>();
+        poseHistory = new LinkedList<>();
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
@@ -218,6 +221,10 @@ public class SampleMecanumDriveCancelable extends MecanumDrive {
         Pose2d lastError = getLastError();
 
         poseHistory.add(currentPose);
+
+        if (POSE_HISTORY_LIMIT > -1 && poseHistory.size() > POSE_HISTORY_LIMIT) {
+            poseHistory.removeFirst();
+        }
 
         TelemetryPacket packet = new TelemetryPacket();
         Canvas fieldOverlay = packet.fieldOverlay();
