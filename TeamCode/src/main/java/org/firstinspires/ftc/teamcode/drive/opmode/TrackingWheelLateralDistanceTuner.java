@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
  * measured value. This need only be an estimated value as you will be tuning it anyways.
  *
  * 2. Make a mark on the bot (with a piece of tape or sharpie or however you wish) and make an
- * similar mark right below the indicator on your bot. This wilÎl be your reference point to
+ * similar mark right below the indicator on your bot. This will be your reference point to
  * ensure you've turned exactly 360°.
  * 3. Although not entirely necessary, having the bot's pose being drawn in dashbooard does help
  * identify discrepancies in the LATERAL_DISTANCE value. To access the dashboard,
