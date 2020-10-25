@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
-import android.util.Log;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.util.Angle;
@@ -25,6 +23,7 @@ import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
  * 2. Make a mark on the bot (with a piece of tape or sharpie or however you wish) and make an
  * similar mark right below the indicator on your bot. This will be your reference point to
  * ensure you've turned exactly 360°.
+ *
  * 3. Although not entirely necessary, having the bot's pose being drawn in dashbooard does help
  * identify discrepancies in the LATERAL_DISTANCE value. To access the dashboard,
  * connect your computer to the RC's WiFi network. In your browser, navigate to
@@ -97,7 +96,7 @@ public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
         boolean tuningFinished = false;
 
         while (!isStopRequested() && !tuningFinished) {
-            Pose2d vel = new Pose2d(0, 0, -gamepad1.right_stick_x * SampleMecanumDrive.OMEGA_WEIGHT);
+            Pose2d vel = new Pose2d(0, 0, -gamepad1.right_stick_x);
             drive.setDrivePower(vel);
 
             drive.update();
@@ -105,16 +104,12 @@ public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
             double heading = drive.getPoseEstimate().getHeading();
             double deltaHeading = heading - lastHeading;
 
-            Log.i("heading", Double.toString(heading));
-            Log.i("delta", Double.toString(deltaHeading));
-            Log.i("deltaNorm", Double.toString(Angle.norm(deltaHeading)));
-
             headingAccumulator += Angle.normDelta(deltaHeading);
             lastHeading = heading;
 
             telemetry.clearAll();
-            telemetry.addLine("Heading (deg): " + Math.toDegrees(headingAccumulator));
-            telemetry.addLine("Heading (raw): " + Math.toDegrees(heading));
+            telemetry.addLine("Total Heading (deg): " + Math.toDegrees(headingAccumulator));
+            telemetry.addLine("Raw Heading (deg): " + Math.toDegrees(heading));
             telemetry.addLine();
             telemetry.addLine("Press Y/△ to conclude routine");
             telemetry.update();
@@ -124,12 +119,12 @@ public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
         }
 
         telemetry.clearAll();
-        telemetry.addLine("Localizer's accumulated heading: " + Math.toDegrees(headingAccumulator) + "°");
+        telemetry.addLine("Localizer's total heading: " + Math.toDegrees(headingAccumulator) + "°");
         telemetry.addLine("Effective LATERAL_DISTANCE: " +
                 (headingAccumulator / (NUM_TURNS * Math.PI * 2)) * StandardTrackingWheelLocalizer.LATERAL_DISTANCE);
 
         telemetry.update();
 
-        while (opModeIsActive() && !isStopRequested()) ;
+        while (!isStopRequested()) idle();
     }
 }
