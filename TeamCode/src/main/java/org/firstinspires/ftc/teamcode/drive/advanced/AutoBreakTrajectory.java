@@ -7,15 +7,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+=import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
+
 /**
  * Example opmode demonstrating how to break out from a live trajectory at any arbitrary point in
  * time. This will allow you to do some cool things like incorporating live trajectory following in
  * your teleop. Check out TeleOpAgumentedDriving.java for an example of such behavior.
  * <p>
- * 3 seconds into the start of the opmode, `drive.cancelFollowing()` is called, forcing the drive
- * mode into IDLE and prematurely stopping the following.
+ * 3 seconds into the start of the opmode, `drive.breakFollowing()` is called, breaking out of all
+ * trajectory following.
  * <p>
- * This sample utilizes the SampleMecanumDriveCancelable.java class.
+ * This sample utilizes the SampleMecanumDriveCancelable.java and TrajectorySequenceRunnerCancelable.java
+ * classes. Please ensure that these files are copied into your own project.
  */
 @Autonomous(group = "advanced")
 public class AutoBreakTrajectory extends LinearOpMode {
@@ -51,7 +54,7 @@ public class AutoBreakTrajectory extends LinearOpMode {
             // 3 seconds into the opmode, we cancel the following
             if (stopTimer.seconds() >= 3) {
                 // Cancel following
-                drive.cancelFollowing();
+                drive.breakFollowing();
 
                 // Stop the motors
                 drive.setDrivePower(new Pose2d());

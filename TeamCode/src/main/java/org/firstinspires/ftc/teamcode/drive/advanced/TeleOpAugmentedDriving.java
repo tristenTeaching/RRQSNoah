@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
+
 /**
  * This opmode demonstrates how one can augment driver control by following Road Runner arbitrary
  * Road Runner trajectories at any time during teleop. This really isn't recommended at all. This is
@@ -32,7 +34,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * The following may be a little off with this method as the trajectory follower and turn
  * function assume the bot starts at rest.
  * <p>
- * This sample utilizes the SampleMecanumDriveCancelable.java class.
+ * This sample utilizes the SampleMecanumDriveCancelable.java and TrajectorySequenceRunnerCancelable.java
+ * classes. Please ensure that these files are copied into your own project.
  */
 @TeleOp(group = "advanced")
 public class TeleOpAugmentedDriving extends LinearOpMode {
@@ -58,6 +61,8 @@ public class TeleOpAugmentedDriving extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Initialize custom cancelable SampleMecanumDrive class
+        // Ensure that the contents are copied over from https://github.com/NoahBres/road-runner-quickstart/blob/advanced-examples/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/SampleMecanumDriveCancelable.java
+        // and https://github.com/NoahBres/road-runner-quickstart/blob/advanced-examples/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TrajectorySequenceRunnerCancelable.java
         SampleMecanumDriveCancelable drive = new SampleMecanumDriveCancelable(hardwareMap);
 
         // We want to turn off velocity control for teleop
@@ -134,7 +139,7 @@ public class TeleOpAugmentedDriving extends LinearOpMode {
                 case AUTOMATIC_CONTROL:
                     // If x is pressed, we break out of the automatic following
                     if (gamepad1.x) {
-                        drive.cancelFollowing();
+                        drive.breakFollowing();
                         currentMode = Mode.DRIVER_CONTROL;
                     }
 

@@ -86,20 +86,25 @@ For more detailed instructions on getting Road Runner setup in your own project,
    Files:
    - [teamcode/drive/advanced/AutoBreakTrajectory.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/AutoBreakTrajectory.java)
    - [teamcode/drive/advanced/SampleMecanumDriveCancelable.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/SampleMecanumDriveCancelable.java)
+   - [teamcode/drive/advanced/TrajectorySequenceRunnerCancelable.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TrajectorySequenceRunnerCancelable.java)
 
     Example opmode describing how to break out from a live trajectory at any arbitrary point in time.
     This allows for neat things like incorporating live trajectory following in your teleop.
     `TeleOpAugmentedDriving.java` will build on this concept. This opmode will prematurely stop the
     following 3 seconds into starting it.
     
-    This opmode utilizes the `SampleMecanumDriveCancelable.java` class. The default
-    `SampleMecanumDrive.java` class does not allow for arbitrary following cancellation.
-
+    This opmode utilizes the `SampleMecanumDriveCancelable.java` and `TrajectorySequenceRunnerCancelable`
+    class. The default `SampleMecanumDrive.java` and `TrajectorySequenceRunner.java` class does not
+    allow for arbitrary following cancellation. Please copy these cancelable versions into your own
+    project and replace the instances of `SampleMecanumDrive` with its cancelable counterpart when
+    needed.
+   
 8. Automatic driving in teleop
 
    Files:
    - [teamcode/drive/advanced/TeleOpAugmentedDriving.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TeleOpAugmentedDriving.java)
    - [teamcode/drive/advanced/SampleMecanumDriveCancelable.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/SampleMecanumDriveCancelable.java)
+   - [teamcode/drive/advanced/TrajectorySequenceRunnerCancelable.java](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/drive/advanced/TrajectorySequenceRunnerCancelable.java)
 
     **WARNING: THIS IS A DEMONSTRATION OF ROAD RUNNER'S CAPABILITIES. I DO NOT RECOMMEND DOING THIS IN GAME**
 
