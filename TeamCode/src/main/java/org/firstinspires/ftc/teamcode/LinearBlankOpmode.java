@@ -53,12 +53,7 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
 @Disabled
 public class LinearBlankOpmode extends LinearOpMode {
-<<<<<<< HEAD
-//what what
-    //chicken pot pies
-=======
 
->>>>>>> parent of 497da42 (Update LinearBlankOpmode.java)
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
